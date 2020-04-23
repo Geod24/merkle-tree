@@ -34,6 +34,7 @@ $ brew install python3
 
 The `produce` mode produces hashes from strings arguments by appying SHA256 twice.  
 
+### Balanced tree
 ```
 $ python merkle.py produce "The quick brown fox" "jump over" "the" "lazy dog"
 ```
@@ -51,16 +52,42 @@ F51DF418D9D7BAFDCFDC4320409E08E39858D0D686FEE959EA545E6D7C214F71
 1E7C521A055F0F08CEA3FADED5923CCA2D8F4366A62AAA8A8B843A842AA656B8
 144BEE93D8F6350C6E38C96EEB11DE2CD249A7BD5D23FF4C91EB46573B5AF3BA
 ```
+If there is an error in the arguments or not enough arguments,  the program exits with `EXIT_FAILURE`.
 
-If there is an error in the arguments or not enough arguments,  the program exits with a `<EXIT_FAILURE>` error.
-
-However, this only works when the number of nodes produces a balanced tree.
-This means the number of arguments is a power of 2.
+This is the test for a balanced tree. In a balanced tree, the number of arguments is a power of 2.
 In the event the tree is not balanced, the last value is repeated to balance the tree:
 
+### Unbalanced tree
+
+Mechanism for getting the level of an unbalanced Merkle tree
+
+num of inputs | (num repeated) num of nodes on last level | total num nodes | level
+------- | ------- | ------- | ------- 
+1 | (+0) 1 | 1 | 0 
+2 | (+0) 2 | 3 | 1 
+3 | (+1) 4 | 7 | 2 
+4 | (+0) 4 | 7 | 2 
+5 | (+3) 8 | 15 | 3 
+6 | (+2) 8 | 15 | 3 
+7 | (+1) 8 | 15 | 3 
+8 | (+0) 8 | 15 | 3 
+9 | (+7) 16 | 31 | 4 
+0 | (+6) 16 | 31 | 4 
+...   | ... | ... | ... 
+
+```python
+lvl = 0 # Set level
+while arrlen > 2**lvl: # The array length is tested against progressive powers of 2
+    lvl += 1
+    if arrlen <= 2**lvl: # If array length is less than the next power, loop breaks and level is set
+        break
+```
+
+Entering 5 strings
 ```
 $ python merkle.py produce "The quick brown fox" "jump over" "the" "lazy" "dog"
 ```
+creates 8 nodes with a Level 3 tree.
 ```
 Level 0:
 9AF409C11D320898DA335F82FAC8918014A6589E55F2C98F2B3C468ED83F6ACE
@@ -100,12 +127,16 @@ Not all requirements were met due to time constraints and a lack of knowledge.
 - [x] SHA-2 / SHA-256
 - [x] Merkle-Damgard construction / hash function
 - [x] Length-extension attacks
+- [x] Static and dynamic linking
 
 ## Program-specific improvements needed
 - [ ] Verification mode incomplete
   - [x] Understand concept of verification
   - [ ] Convert string input into hash object
-- [ ] Use an external dependency, such as libsodium, Crypto++
+- [ ] Use an external dependency, such as OpenSSL, libsodium, Crypto++
 
 ## New concepts to learn
-- [ ] Learn how to work with C++ compiler instead of Python's interpreter
+- [ ] Link external libraries to IDE and compiler
+- [ ] Makefile, CMake
+- [ ] How to work with compilers in CLI instead of Python's interpreter
+- [ ] Get familiar with Unix-like environments
