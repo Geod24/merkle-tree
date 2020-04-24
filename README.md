@@ -2,7 +2,7 @@
 
 This is a simple Merkle Tree implementation with Python.  
 To be implemented in C++ / D.  
-Last updated on 2020-04-23.  
+Last updated on 2020-04-24.  
 *Korean version: [한국어](README_ko.md)*
 
 ## Table of Contents
@@ -18,6 +18,12 @@ Last updated on 2020-04-23.
   - [Things to learn](#things-to-learn)
 
 ## Installation
+
+First, download or clone this repository
+
+```
+$ git clone https://github.com/kchulj/merkle-tree.git
+```
 
 ### Linux
 
@@ -129,7 +135,26 @@ F51DF418D9D7BAFDCFDC4320409E08E39858D0D686FEE959EA545E6D7C214F71
 
 ### Verify mode
 
-To be implemented.
+**Incomplete**
+
+The ```verify``` mode verifies if the hash is a part of the Merkle tree.
+It should take 6 or more arguments as follows:  
+- [1] verify *(the mode)*
+- [2] Merkle root : *str -> hash*
+- [3] number of values in the Merkle tree : *int*
+- [4] 0-based index of value being provided : *int*
+- [5] hash at the provided index : *str -> hash*
+- [6][...][6 + level - 1] merkle path : *str -> hash*
+
+Example:
+```
+$ python merkle.py verify 018FB04252A594A8049CBFE9E34848249040E1FA7E170501E17ADC06393D4DC3 4 1 F51DF418D9D7BAFDCFDC4320409E08E39858D0D686FEE959EA545E6D7C214F71 7743034D22491720B723B68AFD046BE66969409254DC79A153E290C81A8F238A 49B9A6B1346DC768898A16C2DAD9D554349C9150F8B2809AC7D48B305C4D3650
+```
+```
+Valid Merkle path
+```
+
+In the event the verification fails, the program should output: “Invalid Merkle path”. The program should return ```EXIT_SUCCESS``` when the verification passes, and ```EXIT_FAILURE``` when the verification fails.
 
 ## Requirements
 - [ ] Run on a recent Linux and/or Mac OS X (we will test on our machines)
@@ -153,7 +178,7 @@ Not all requirements were met due to lack of knowledge and time constraints.
 ## Things learned
 - [x] SHA-2 / SHA-256 algorithm
 - [x] Merkle-Damgard construction / hash function
-- [x] Length-extension attacks
+- [x] What are length-extension attacks
 - [x] Static vs. dynamic linking
 
 ## Things to learn
