@@ -1,6 +1,6 @@
 import sys
 from produce import merkleProduce
-from verify import merkleVerify
+from verify_incomplete import merkleVerify
 
 if len(sys.argv) <= 2:
     sys.exit("EXIT_NO_ARGUMENTS")
