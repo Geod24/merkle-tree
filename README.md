@@ -3,7 +3,7 @@
 This is a simple Merkle Tree implementation with Python.  
 To be implemented in C++ / D.  
 Last updated on 2020-04-23.  
-*Korean version: [한국어](README_KO.md)
+*Korean version: [한국어](README_ko.md)
 
 ## Table of Contents
   - [Installation](#installation)
