@@ -2,7 +2,20 @@
 
 This is a simple Merkle Tree implementation with Python.  
 To be implemented in C++ / D.  
-Last updated on 2020-04-23.
+Last updated on 2020-04-23.  
+*Korean version: [한국어](README_KO.md)
+
+## Table of Contents
+  - [Installation](#installation)
+    - [Linux](#linux)
+    - [macOS](#macos)
+  - [Usage](#usage)
+    - [Produce mode](#produce-mode)
+    - [Verify mode](#verify-mode)
+  - [Requirements](#requirements)
+  - [Program-specific improvements needed](#program-specific-improvements-needed)
+  - [Things learned](#things-learned)
+  - [Things to learn](#things-to-learn)
 
 ## Installation
 
@@ -32,14 +45,17 @@ $ brew install python3
 
 ## Usage
 
+### Produce mode
+
 The `produce` mode produces hashes from strings arguments by appying SHA256 twice.  
 
-### Balanced tree
 ```
 $ python merkle.py produce "The quick brown fox" "jump over" "the" "lazy dog"
 ```
+
 The program prints the Merkle tree generated from those values.  
 The hash in the Level 0 is the Merkle Root.
+
 ```
 Level 0:
 018FB04252A594A8049CBFE9E34848249040E1FA7E170501E17ADC06393D4DC3
@@ -52,14 +68,13 @@ F51DF418D9D7BAFDCFDC4320409E08E39858D0D686FEE959EA545E6D7C214F71
 1E7C521A055F0F08CEA3FADED5923CCA2D8F4366A62AAA8A8B843A842AA656B8
 144BEE93D8F6350C6E38C96EEB11DE2CD249A7BD5D23FF4C91EB46573B5AF3BA
 ```
-If there is an error in the arguments or not enough arguments,  the program exits with `EXIT_FAILURE`.
+
+If there is an error in the arguments or not enough arguments, the program exits with `EXIT_FAILURE`.
 
 This is the test for a balanced tree. In a balanced tree, the number of arguments is a power of 2.
-In the event the tree is not balanced, the last value is repeated to balance the tree:
+In the event the tree is not balanced, the last value is repeated to balance the tree.
 
-### Unbalanced tree
-
-Mechanism for getting the level of an unbalanced Merkle tree
+Algorithm for getting the level of an unbalanced Merkle tree
 
 num of inputs | (num repeated) num of nodes on last level | total num nodes | level
 ------- | ------- | ------- | ------- 
@@ -84,10 +99,13 @@ while arrlen > 2**lvl: # The array length is tested against progressive powers o
 ```
 
 Entering 5 strings
+
 ```
 $ python merkle.py produce "The quick brown fox" "jump over" "the" "lazy" "dog"
 ```
-creates 8 nodes with a Level 3 tree.
+
+creates 8 nodes on the last level and a Level 3 tree.
+
 ```
 Level 0:
 9AF409C11D320898DA335F82FAC8918014A6589E55F2C98F2B3C468ED83F6ACE
@@ -110,6 +128,10 @@ F51DF418D9D7BAFDCFDC4320409E08E39858D0D686FEE959EA545E6D7C214F71
 9DA6BDB1E8A041F1795966F87619385B713E4BEFE723130ED2748939EF791579
 ```
 
+### Verify mode
+
+To be implemented.
+
 ## Requirements
 - [ ] The program MUST run on a recent Linux and/or Mac OS X (we will test on our machines)
 > Verify mode not implemented
@@ -121,22 +143,22 @@ F51DF418D9D7BAFDCFDC4320409E08E39858D0D686FEE959EA545E6D7C214F71
 > Hash function outputs different values. Need to try other libraries.
 - [ ] Documentation and additional tests CAN be added at your discretion
 
-Not all requirements were met due to time constraints and a lack of knowledge.  
-
-## Things learned
-- [x] SHA-2 / SHA-256
-- [x] Merkle-Damgard construction / hash function
-- [x] Length-extension attacks
-- [x] Static and dynamic linking
+Not all requirements were met due to lack of knowledge and time constraints. 
 
 ## Program-specific improvements needed
-- [ ] Verification mode incomplete
+- [ ] Verify mode incomplete
   - [x] Understand concept of verification
-  - [ ] Convert string input into hash object
-- [ ] Use an external dependency, such as OpenSSL, libsodium, Crypto++
+  - [ ] How to convert string input into hash object?
+- [ ] Use dependencies, such as OpenSSL, libsodium, Crypto++
 
-## New concepts to learn
-- [ ] Link external libraries to IDE and compiler
-- [ ] Makefile, CMake
-- [ ] How to work with compilers in CLI instead of Python's interpreter
+## Things learned
+- [x] SHA-2 / SHA-256 algorithm
+- [x] Merkle-Damgard construction / hash function
+- [x] Length-extension attacks
+- [x] Static vs. dynamic linking
+
+## Things to learn
+- [ ] Link dependencies to IDE and compiler
+- [ ] Master building tools: Makefile, CMake
+- [ ] Work with compilers in CLI instead of Python's interpreter
 - [ ] Get familiar with Unix-like environments
