@@ -1,9 +1,9 @@
 # 머클 트리 구조
 
-파이썬을 이용한 간단한 머클 트리 구현
+파이썬을 이용한 간단한 머클 트리 구현.  
 C++ / D 로 구현 예정.  
 업데이트 2020-04-23.  
-*영어 버전: [English](README.md)
+*영어 버전: [English](README.md)*
 
 ## 목록
   - [설치](#설치)
@@ -70,12 +70,10 @@ F51DF418D9D7BAFDCFDC4320409E08E39858D0D686FEE959EA545E6D7C214F71
 ```
 
 인수 오류 혹은 인수 입력이 없을 경유, 프로그램은 종료하고 `EXIT_FAILURE` 메세지를 출력합니다.
-If there is an error in the arguments or not enough arguments,  the program exits with .
 
-이 테스트는 균형 이진 트리의 경우입니다. 균형 이진 트리에서의 인수의 수는 2의 지수입니다.
-불균형 트리일 경우, 마지막 값이 반복됨으로써 균형 트리가 생성됩니다.
+이 테스트는 균형 이진 트리의 경우입니다. 균형 이진 트리에서의 인수의 수는 2의 지수입니다. 불균형 트리일 경우, 마지막 값이 반복됨으로써 균형 트리가 생성됩니다.
 
-불균형 머클 트리의 레벨을 정하는 알고리즘 입니다.  
+아래의 알고리즘은 불균형 머클 트리의 레벨을 정하는 알고리즘 입니다.  
 
 num of inputs | (num repeated) num of nodes on last level | total num nodes | level
 ------- | ------- | ------- | ------- 
@@ -95,7 +93,7 @@ num of inputs | (num repeated) num of nodes on last level | total num nodes | le
 lvl = 0 # 시작 레벨입니다.
 while arrlen > 2**lvl: # 배열 길이는 2의 지수와 비교됩니다.
     lvl += 1
-    if arrlen <= 2**lvl: # 배열 길이가 다음 2의 지수보다 작을 경우, 루프는 break하고 레벨이 결정됩니다.
+    if arrlen <= 2**lvl: # 배열 길이가 다음 2의 지수보다 작거나 같을 경우, 루프는 break하고 레벨이 결정됩니다.
         break
 ```
 
@@ -105,7 +103,7 @@ while arrlen > 2**lvl: # 배열 길이는 2의 지수와 비교됩니다.
 $ python merkle.py produce "The quick brown fox" "jump over" "the" "lazy" "dog"
 ```
 
-마지막 레벨에 8개의 노드와 레벨 3 트리를 생성합니다.
+마지막 해쉬를 3번 반복하고, 마지막 레벨에 8개의 노드와 레벨 3 트리를 생성합니다.
 
 ```
 Level 0:
@@ -134,7 +132,7 @@ F51DF418D9D7BAFDCFDC4320409E08E39858D0D686FEE959EA545E6D7C214F71
 구현 예정.
 
 ## 요구사항
-- [ ] 최신 Linux / Mac OS X 운영체제에서 실행 (we will test on our machines)
+- [ ] 최신 Linux / Mac OS X 운영체제에서 실행
 > Verify 모드 미완성
 - [x] 다음 언어 중 한가지 사용: D, C++, C, Go, Rust, Python
 - [x] 코드 빌딩 설명 제공
@@ -160,4 +158,4 @@ F51DF418D9D7BAFDCFDC4320409E08E39858D0D686FEE959EA545E6D7C214F71
 - [ ] Dependency를 IDE, compiler와 링킹
 - [ ] 빌딩 도구: Makefile, CMake
 - [ ] 컴파일러를 CLI에서 실행
-- [ ] 유닉스 환경
+- [ ] 유닉스 환경 개발 연습

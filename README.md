@@ -3,7 +3,7 @@
 This is a simple Merkle Tree implementation with Python.  
 To be implemented in C++ / D.  
 Last updated on 2020-04-23.  
-*Korean version: [한국어](README_ko.md)
+*Korean version: [한국어](README_ko.md)*
 
 ## Table of Contents
   - [Installation](#installation)
@@ -71,10 +71,9 @@ F51DF418D9D7BAFDCFDC4320409E08E39858D0D686FEE959EA545E6D7C214F71
 
 If there is an error in the arguments or not enough arguments, the program exits with `EXIT_FAILURE`.
 
-This is the test for a balanced tree. In a balanced tree, the number of arguments is a power of 2.
-In the event the tree is not balanced, the last value is repeated to balance the tree.
+This is the test for a balanced tree. In a balanced tree, the number of arguments is a power of 2. In the event the tree is not balanced, the last value is repeated to balance the tree.
 
-Algorithm for getting the level of an unbalanced Merkle tree
+Below is an algorithm for getting the level of an unbalanced Merkle tree
 
 num of inputs | (num repeated) num of nodes on last level | total num nodes | level
 ------- | ------- | ------- | ------- 
@@ -94,7 +93,7 @@ num of inputs | (num repeated) num of nodes on last level | total num nodes | le
 lvl = 0 # Set level
 while arrlen > 2**lvl: # The array length is tested against progressive powers of 2
     lvl += 1
-    if arrlen <= 2**lvl: # If array length is less than the next power, loop breaks and level is set
+    if arrlen <= 2**lvl: # If array length is less than or equal to the next power, loop breaks and level is set
         break
 ```
 
@@ -104,7 +103,7 @@ Entering 5 strings
 $ python merkle.py produce "The quick brown fox" "jump over" "the" "lazy" "dog"
 ```
 
-creates 8 nodes on the last level and a Level 3 tree.
+repeates the last hash 3 times and creates 8 nodes on the last level and a Level 3 tree.
 
 ```
 Level 0:
@@ -133,13 +132,13 @@ F51DF418D9D7BAFDCFDC4320409E08E39858D0D686FEE959EA545E6D7C214F71
 To be implemented.
 
 ## Requirements
-- [ ] The program MUST run on a recent Linux and/or Mac OS X (we will test on our machines)
+- [ ] Run on a recent Linux and/or Mac OS X (we will test on our machines)
 > Verify mode not implemented
-- [x] You MUST use one of the following languages: D, C++, C, Go, Rust, Python
-- [x] You MUST provide us with instructions on how to build your code
-- [x] You MUST NOT use any library function, except for hashing and writing to the console
-- [x] You MUST handle errors gracefully (e.g. no hard crash)
-- [ ] The output SHOULD follow the same format as the provided example
+- [x] Use one of the following languages: D, C++, C, Go, Rust, Python
+- [x] Provide instructions on how to build your code
+- [x] No library functions, except for hashing and writing to the console
+- [x] Handle errors gracefully (e.g. no hard crash)
+- [ ] Output SHOULD follow the same format as the provided example
 > Hash function outputs different values. Need to try other libraries.
 - [ ] Documentation and additional tests CAN be added at your discretion
 
@@ -159,6 +158,6 @@ Not all requirements were met due to lack of knowledge and time constraints.
 
 ## Things to learn
 - [ ] Link dependencies to IDE and compiler
-- [ ] Master building tools: Makefile, CMake
+- [ ] Practice with building tools: Makefile, CMake
 - [ ] Work with compilers in CLI instead of Python's interpreter
 - [ ] Get familiar with Unix-like environments
