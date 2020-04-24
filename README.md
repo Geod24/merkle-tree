@@ -1,8 +1,8 @@
 # Merkle Tree infrastructure
 
-This is a simple Merkle Tree implementation with Python.  
+A Merkle Tree implementation with Python.  
 To be implemented in C++ / D.  
-Last updated on 2020-04-24.  
+Last updated on 2020-04-25.  
 *Korean version: [한국어](README_ko.md)*
 
 ## Table of Contents
@@ -19,7 +19,7 @@ Last updated on 2020-04-24.
 
 ## Installation
 
-First, download or clone this repository
+First, download or clone this repository.
 
 ```
 $ git clone https://github.com/kchulj/merkle-tree.git
@@ -60,7 +60,7 @@ $ python merkle.py produce "The quick brown fox" "jump over" "the" "lazy dog"
 ```
 
 The program prints the Merkle tree generated from those values.  
-The hash in the Level 0 is the Merkle Root.
+The Level 0 hash is the Merkle Root.
 
 ```
 Level 0:
@@ -75,11 +75,11 @@ F51DF418D9D7BAFDCFDC4320409E08E39858D0D686FEE959EA545E6D7C214F71
 144BEE93D8F6350C6E38C96EEB11DE2CD249A7BD5D23FF4C91EB46573B5AF3BA
 ```
 
-If there is an error in the arguments or not enough arguments, the program exits with `EXIT_FAILURE`.
+If there are no arguments or invalid arguments, the program exits with `EXIT_FAILURE`.
 
 This is the test for a balanced tree. In a balanced tree, the number of arguments is a power of 2. In the event the tree is not balanced, the last value is repeated to balance the tree.
 
-Below is an algorithm for getting the level of an unbalanced Merkle tree
+Below is an algorithm for setting the level of an unbalanced Merkle tree.
 
 num of inputs | (num repeated) num of nodes on last level | total num nodes | level
 ------- | ------- | ------- | ------- 
@@ -92,14 +92,14 @@ num of inputs | (num repeated) num of nodes on last level | total num nodes | le
 7 | (+1) 8 | 15 | 3 
 8 | (+0) 8 | 15 | 3 
 9 | (+7) 16 | 31 | 4 
-0 | (+6) 16 | 31 | 4 
-...   | ... | ... | ... 
+10 | (+6) 16 | 31 | 4 
+...  | ... | ... | ... 
 
 ```python
-lvl = 0 # Set level
-while arrlen > 2**lvl: # The array length is tested against progressive powers of 2
+lvl = 0 # Initialize level
+while arrlen > 2**lvl: # Test array length against consecutive powers of 2
     lvl += 1
-    if arrlen <= 2**lvl: # If array length is less than or equal to the next power, loop breaks and level is set
+    if arrlen <= 2**lvl: # If array length is less than or equal to the next power, break loop and set level
         break
 ```
 
@@ -109,7 +109,7 @@ Entering 5 strings
 $ python merkle.py produce "The quick brown fox" "jump over" "the" "lazy" "dog"
 ```
 
-repeates the last hash 3 times and creates 8 nodes on the last level and a Level 3 tree.
+repeats the last hash 3 times and creates 8 nodes on the last level and a Level 3 tree.
 
 ```
 Level 0:
@@ -154,7 +154,7 @@ $ python merkle.py verify 018FB04252A594A8049CBFE9E34848249040E1FA7E170501E17ADC
 Valid Merkle path
 ```
 
-In the event the verification fails, the program should output: “Invalid Merkle path”. The program should return ```EXIT_SUCCESS``` when the verification passes, and ```EXIT_FAILURE``` when the verification fails.
+In the event the verification fails, the program outputs ```Invalid Merkle path``` and returns ```EXIT_FAILURE```. If the verification passes, the program outputs  ```Valid Merkle path``` and returns ```EXIT_SUCCESS```.
 
 ## Requirements
 - [ ] Run on a recent Linux and/or Mac OS X (we will test on our machines)

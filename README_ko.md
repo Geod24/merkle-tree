@@ -1,17 +1,17 @@
 # 머클 트리 구조
 
-파이썬을 이용한 간단한 머클 트리 구현.  
+파이썬을 이용한 머클 트리 구현.  
 C++ / D 로 구현 예정.  
-업데이트 2020-04-24.  
+업데이트 2020-04-25.  
 *영어 버전: [English](README.md)*
 
 ## 목록
   - [설치](#설치)
     - [리눅스](#리눅스)
     - [macOS](#macos)
-  - [사용](#사용)
-    - [Produce 모드](#produce-모드)
-    - [Verify 모드](#verify-모드)
+  - [사용법](#사용법)
+    - [생성 모드](#생성-모드)
+    - [확인 모드](#확인-모드)
   - [요구사항](#요구사항)
   - [개선해야할 사항](#개선해야할-사항)
   - [배운 개념](#배운-개념)
@@ -19,7 +19,7 @@ C++ / D 로 구현 예정.
 
 ## 설치
 
-리포지토리 클론 및 다운로드.
+리포지토리 클론 또는 다운로드.
 
 ```
 $ git clone https://github.com/kchulj/merkle-tree.git
@@ -51,9 +51,9 @@ $ brew install python3
 
 ## 사용법
 
-### Produce 모드
+### 생성 모드
 
-`produce` 모드는 입력된 문자열에 SHA256 알고리즘을 2번 적용한 후 해시를 생성합니다.  
+생성 `produce` 모드는 입력된 문자열에 SHA256 알고리즘을 2번 적용함으로써 해시를 생성합니다.  
 
 ```
 $ python merkle.py produce "The quick brown fox" "jump over" "the" "lazy dog"
@@ -75,13 +75,13 @@ F51DF418D9D7BAFDCFDC4320409E08E39858D0D686FEE959EA545E6D7C214F71
 144BEE93D8F6350C6E38C96EEB11DE2CD249A7BD5D23FF4C91EB46573B5AF3BA
 ```
 
-인수 오류 혹은 인수 입력이 없을 경우, 프로그램은 종료하고 `EXIT_FAILURE` 메세지를 출력합니다.
+인수 입력이 없거나 오류가 있을 경우, 프로그램은 종료하고 `EXIT_FAILURE` 메세지를 출력합니다.
 
 이 테스트는 균형 이진 트리의 경우입니다. 균형 이진 트리에서의 인수의 갯수는 2의 지수입니다. 불균형 트리일 경우, 마지막 값이 반복됨으로써 균형 트리가 생성됩니다.
 
 아래의 알고리즘은 불균형 머클 트리의 레벨을 정하는 알고리즘 입니다.  
 
-num of inputs | (num repeated) num of nodes on last level | total num nodes | level
+입력 갯수 | (반복된 갯수) 마지막 레벨 노드 갯수 | 총 노드 수 | 레벨
 ------- | ------- | ------- | ------- 
 1 | (+0) 1 | 1 | 0 
 2 | (+0) 2 | 3 | 1 
@@ -92,14 +92,14 @@ num of inputs | (num repeated) num of nodes on last level | total num nodes | le
 7 | (+1) 8 | 15 | 3 
 8 | (+0) 8 | 15 | 3 
 9 | (+7) 16 | 31 | 4 
-0 | (+6) 16 | 31 | 4 
-...   | ... | ... | ... 
+10 | (+6) 16 | 31 | 4 
+...  | ... | ... | ... 
 
 ```python
-lvl = 0 # 시작 레벨입니다.
-while arrlen > 2**lvl: # 배열 길이는 2의 지수와 비교됩니다.
+lvl = 0 # 시작 레벨
+while arrlen > 2**lvl: # 배열 길이를 순차적으로 2의 지수와 비교
     lvl += 1
-    if arrlen <= 2**lvl: # 배열 길이가 다음 2의 지수보다 작거나 같을 경우, 루프는 break하고 레벨이 결정됩니다.
+    if arrlen <= 2**lvl: # 배열 길이가 다음 2의 지수보다 작거나 같을 경우, 루프는 break하고 레벨 결정
         break
 ```
 
@@ -133,16 +133,16 @@ F51DF418D9D7BAFDCFDC4320409E08E39858D0D686FEE959EA545E6D7C214F71
 9DA6BDB1E8A041F1795966F87619385B713E4BEFE723130ED2748939EF791579
 ```
 
-### Verify 모드
+### 확인 모드
 
 **미완성**
 
-```verify``` 모드는 해쉬가 머클 트리의 일부인지 확인합니다.
+확인 ```verify``` 모드는 해쉬가 머클 트리의 일부인지 확인합니다.
 이 모드는 최소 6개의 인수를 아래와 같이 받아야 합니다:
 - [1] verify *(모드)*
 - [2] 머클 루트 : *str -> hash*
 - [3] 값의 갯수 : *int*
-- [4] 해쉬의 인덱스  : *int*
+- [4] 해쉬 인덱스  : *int*
 - [5] 해쉬값 : *str -> hash*
 - [6][...][6 + 레벨 - 1] 머클 경로 : *str -> hash*
 
@@ -154,7 +154,7 @@ $ python merkle.py verify 018FB04252A594A8049CBFE9E34848249040E1FA7E170501E17ADC
 Valid Merkle path
 ```
 
-확인이 실패할 경우 프로그램은 “Invalid Merkle path” 메시지를 출력합니다. 확인이 성공하면 ```EXIT_SUCCESS```를 리턴하고, 실패하면 ```EXIT_FAILURE```를 리턴합니다.
+확인이 실패할 경우 프로그램은 ```Invalid Merkle path``` 메시지를 출력하고 ```EXIT_FAILURE```를 리턴합니다. 확인이 성공하면 ```Valid Merkle path``` 메시지를 출력하고 ```EXIT_SUCCESS```를 리턴합니다.
 
 ## 요구사항
 - [ ] 최신 Linux / Mac OS X 운영체제에서 실행

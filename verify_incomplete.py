@@ -7,9 +7,9 @@ import hashlib
 # NEED TO: find better library for hashing
 
 def merkleVerify():
-    merkleRoot1 = sys.argv[2] # [2] : str -> hash
-    nVals = sys.argv[3]
-    iVal = sys.argv[4]
+    merkleRoot = sys.argv[2] # [2] : str -> hash
+    nVals = sys.argv[3] # [3] : str -> int
+    iVal = sys.argv[4] # [4] : str -> int
     valHash1 = sys.argv[5] # [5] : str -> hash
 
     # Error cases
@@ -19,8 +19,8 @@ def merkleVerify():
     elif iVal.isnumeric() == False:
         sys.exit("EXIT_INVALID_DATATYPE") 
     
-    numVals = int(nVals) # [3] : str -> int
-    idxVal = int(iVal) # [4] : str -> int
+    numVals = int(nVals) 
+    idxVal = int(iVal)
 
     # Set tree level
     
@@ -34,13 +34,15 @@ def merkleVerify():
         sys.exit("EXIT_INCOMPLETE_TREE")
     elif idxVal > numVals - 1:
         sys.exit("EXIT_INVALID_INDEX")
-    elif len(sys.argv[6:]) != vLvl:
-        sys.exit("EXIT_INVALID_PATH")
+    elif len(sys.argv[6:]) < vLvl:
+        sys.exit("EXIT_INCOMPLETE_PATH")
+    elif len(sys.argv[6:]) > vLvl:
+        sys.exit("EXIT_OVERFLOW_PATH")
 
     ### *TEST* Make sample hashes
     
-    merkleRoot = hashlib.sha256(merkleRoot1.encode('utf-8'))
-    rootHex = merkleRoot.hexdigest()
+    merkleRoot1 = hashlib.sha256(merkleRoot.encode('utf-8'))
+    rootHex = merkleRoot1.hexdigest()
     valHash = hashlib.sha256(valHash1.encode('utf-8'))
 
     # Store path elements into array
@@ -65,7 +67,7 @@ def merkleVerify():
         if vLvlCount > vLvl:
             break
 
-    print(testPrint) # *TEST* original path
+    print(testPrint) ### *TEST* original path
 
     # Combine target hash and hash from path
     
@@ -77,8 +79,8 @@ def merkleVerify():
     pathArr.insert(0,nHash) # replace
     testPrint.insert(0,nHash.hexdigest())
 
-    print(testPrint)
-    # *TEST* Hash at [0] now a comb. of target hash and first hash in path
+    print(testPrint) ### *TEST*
+    # Hash at [0] now a comb. of target hash and previous hash in [0]
 
     j = 0
     while len(pathArr) > 1: # Combine until root
@@ -89,21 +91,20 @@ def merkleVerify():
         nnHash.update(tmp4.digest())
         pathArr.insert(0,nnHash) # Insert into [0]
         testPrint.insert(0,nnHash.hexdigest())
-        del pathArr[1] # Delete [1] and [2](next step)
+        del pathArr[1] # Delete [1]
         del testPrint[1]
         del pathArr[1] # [2] from above is [1] now
         del testPrint[1]
     
-        print(testPrint) # *TEST* Observe the hashes merging
+        print(testPrint) ### *TEST* Observe the hashes merging
 
-        # The array has one less element now
+        # This array has one less element now
         
         if len(pathArr) <= 1:
             break
     
-    #if merkleRoot1 == pathArr[0]:
-    sys.exit("EXIT_SUCCESS")
-    
-    #else:
-        #print("Invalid Merkle path")
-        #sys.exit("EXIT_FAILURE")
+    if merkleRoot == pathArr[0]:
+        sys.exit("EXIT_SUCCESS")
+    else:
+        print("Invalid Merkle path") ### *TEST* Always prints this for now
+        sys.exit("EXIT_FAILURE")
