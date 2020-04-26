@@ -41,7 +41,7 @@ $ sudo apt-get install python3
 
 파이썬 설치 확인.
 ```bash
-$ python 
+$ python --version
 ```
 
 설치되어 있지 않은 경우, Homebrew 이용해서 파이썬 설치.

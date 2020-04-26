@@ -41,7 +41,7 @@ $ sudo apt-get install python3
 
 Check if Python is installed.
 ```bash
-$ python 
+$ python --version
 ```
 
 If not, install with Homebrew.
