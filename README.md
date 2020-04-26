@@ -53,7 +53,7 @@ $ brew install python3
 
 ### Produce mode
 
-The `produce` mode produces hashes from strings arguments by appying SHA256 twice.  
+The `produce` mode produces hashes from strings arguments by applying SHA256 twice.  
 
 ```
 $ python merkle.py produce "The quick brown fox" "jump over" "the" "lazy dog"
@@ -79,7 +79,7 @@ If there are no arguments or invalid arguments, the program exits with `EXIT_FAI
 
 This is the test for a balanced tree. In a balanced tree, the number of arguments is a power of 2. In the event the tree is not balanced, the last value is repeated to balance the tree.
 
-Below is an algorithm for setting the level of an unbalanced Merkle tree.
+Below is the algorithm for setting the level of an unbalanced Merkle tree.
 
 num of inputs | (num repeated) num of nodes on last level | total num nodes | level
 ------- | ------- | ------- | ------- 
