@@ -7,12 +7,15 @@ import hashlib
 # NEED TO: find better library for hashing
 
 def merkleVerify():
+    if len(sys.argv) <= 6:
+        sys.exit("EXIT_INCOMPLETE_ARGUMENTS")
+    
     merkleRoot = sys.argv[2] # [2] : str -> hash
     nVals = sys.argv[3] # [3] : str -> int
     iVal = sys.argv[4] # [4] : str -> int
     valHash1 = sys.argv[5] # [5] : str -> hash
 
-    # Error cases
+    # Error handling
     
     if nVals.isnumeric() == False:
         sys.exit("EXIT_INVALID_DATATYPE")
@@ -20,7 +23,7 @@ def merkleVerify():
         sys.exit("EXIT_INVALID_DATATYPE") 
     
     numVals = int(nVals) 
-    idxVal = int(iVal)
+    idxVal = int(iVal) 
 
     # Set tree level
     
@@ -33,6 +36,8 @@ def merkleVerify():
     if numVals % (2**vLvl) != 0:
         sys.exit("EXIT_INCOMPLETE_TREE")
     elif idxVal > numVals - 1:
+        sys.exit("EXIT_INVALID_INDEX")
+    elif idxVal < 0:
         sys.exit("EXIT_INVALID_INDEX")
     elif len(sys.argv[6:]) < vLvl:
         sys.exit("EXIT_INCOMPLETE_PATH")
@@ -64,6 +69,7 @@ def merkleVerify():
     while vLvlCount <= vLvl:
         vLvlArr.append(vLvlCount)
         vLvlCount += 1
+        
         if vLvlCount > vLvl:
             break
 
@@ -82,10 +88,10 @@ def merkleVerify():
     print(testPrint) ### *TEST*
     # Hash at [0] now a comb. of target hash and previous hash in [0]
 
-    j = 0
+    k = 0
     while len(pathArr) > 1: # Combine until root
-        tmp3 = pathArr[j]
-        tmp4 = pathArr[j+1]
+        tmp3 = pathArr[k]
+        tmp4 = pathArr[k+1]
         nnHash = hashlib.sha256()
         nnHash.update(tmp3.digest())
         nnHash.update(tmp4.digest())
@@ -104,7 +110,9 @@ def merkleVerify():
             break
     
     if merkleRoot == pathArr[0]:
+        print("Valid Merkle path")
         sys.exit("EXIT_SUCCESS")
     else:
         print("Invalid Merkle path") ### *TEST* Always prints this for now
         sys.exit("EXIT_FAILURE")
+    

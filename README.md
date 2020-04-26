@@ -146,6 +146,8 @@ It should take 6 or more arguments as follows:
 - [5] hash at the provided index : *str -> hash*
 - [6][...][6 + level - 1] merkle path : *str -> hash*
 
+> [0] is ```python```, the default argument.
+
 Example:
 ```
 $ python merkle.py verify 018FB04252A594A8049CBFE9E34848249040E1FA7E170501E17ADC06393D4DC3 4 1 F51DF418D9D7BAFDCFDC4320409E08E39858D0D686FEE959EA545E6D7C214F71 7743034D22491720B723B68AFD046BE66969409254DC79A153E290C81A8F238A 49B9A6B1346DC768898A16C2DAD9D554349C9150F8B2809AC7D48B305C4D3650
@@ -157,14 +159,14 @@ Valid Merkle path
 In the event the verification fails, the program outputs ```Invalid Merkle path``` and returns ```EXIT_FAILURE```. If the verification passes, the program outputs  ```Valid Merkle path``` and returns ```EXIT_SUCCESS```.
 
 ## Requirements
-- [ ] Run on a recent Linux and/or Mac OS X (we will test on our machines)
-> Verify mode not implemented
+- [ ] Run on a recent Linux and/or Mac OS X
+> Verify mode not completely implemented
 - [x] Use one of the following languages: D, C++, C, Go, Rust, Python
-- [x] Provide instructions on how to build your code
+- [x] Provide instructions on how to build the code
 - [x] No library functions, except for hashing and writing to the console
 - [x] Handle errors gracefully (e.g. no hard crash)
-- [ ] Output SHOULD follow the same format as the provided example
-> Hash function outputs different values. Need to try other libraries.
+- [ ] Output should follow the same format as the provided example
+> Hash function outputs different values - need to try other libraries.
 - [ ] Documentation and additional tests CAN be added at your discretion
 
 Not all requirements were met due to lack of knowledge and time constraints. 

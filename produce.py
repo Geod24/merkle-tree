@@ -7,9 +7,7 @@ def merkleProduce():
     arr = [arr for arr in sys.argv[2:]]
     arrlen = len(arr)
 
-    # Initialize array of levels
-    
-    lvlArr = []
+    lvlArr = [] # Array of levels
 
     # The double SHA-256 hashed strings will be stored into:
     
@@ -80,6 +78,7 @@ def merkleProduce():
             midArr.append(newHash)
             mprtArr.append(newHash.hexdigest().upper())
             i += 2
+            
             if i > (len(hashArr)-1):
                 finArr.append(midArr) # Append array to final array
                 prtArr.append(mprtArr)
@@ -95,12 +94,12 @@ def merkleProduce():
     while (ind <= len(lvlArr)):
         print("Level " + str(lvlArr[ind-1]) + ":")
         
-        for z in range(len(prtArr[-ind])):
-            print(prtArr[-ind][z])
-                
+        for j in range(len(prtArr[-ind])):
+            print(prtArr[-ind][j])
         ind += 1
 
         if ind > len(lvlArr):
             break
 
-    sys.exit()
+    sys.exit("EXIT_SUCCESS")
+    
