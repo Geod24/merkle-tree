@@ -3,22 +3,22 @@ import hashlib
 
 def merkleProduce():
     # Initialize array of arguments
-    
+
     arr = [arr for arr in sys.argv[2:]]
     arrlen = len(arr)
 
     lvlArr = [] # Array of levels
 
     # The double SHA-256 hashed strings will be stored into:
-    
+
     hashArr = [] # Array of hash objects
     pprtArr = [] # Array of hashes converted to hex, for printing only
 
     # Process of completing tree
-    
+
     midArr = [] # Temporary middle array for appending to final array
     finArr = [] # Final array : array of arrays
- 
+
     # Set tree level
 
     lvl = 0
@@ -28,7 +28,7 @@ def merkleProduce():
             break
 
     # Make level array
-    
+
     lvlCount = 0
     while lvlCount <= lvl:
         lvlArr.append(lvlCount)
@@ -47,7 +47,7 @@ def merkleProduce():
         pprtArr.append(a3)
 
     # Balance tree by repeating the last element
-    
+
     if arrlen < 2**lvl:
         for y in range(arrlen,2**lvl):
             b = hashlib.sha256(arr[arrlen-1].encode('utf-8'))
@@ -60,13 +60,13 @@ def merkleProduce():
     finArr.append(hashArr) # First array in array contains the original hashes
 
     # The arrays below are clones and for printing only
-        
+
     mprtArr = []
     prtArr = []
     prtArr.append(pprtArr)
-    
+
     # Add to final array
-    
+
     i = 0
     for z in range(len(lvlArr)):
         while i < len(hashArr)-1:
@@ -78,7 +78,7 @@ def merkleProduce():
             midArr.append(newHash)
             mprtArr.append(newHash.hexdigest().upper())
             i += 2
-            
+
             if i > (len(hashArr)-1):
                 finArr.append(midArr) # Append array to final array
                 prtArr.append(mprtArr)
@@ -87,13 +87,13 @@ def merkleProduce():
                 mprtArr = []
                 i = 0
                 break
-    
+
     # Print by level
 
     ind = 1
     while (ind <= len(lvlArr)):
         print("Level " + str(lvlArr[ind-1]) + ":")
-        
+
         for j in range(len(prtArr[-ind])):
             print(prtArr[-ind][j])
         ind += 1
@@ -102,4 +102,3 @@ def merkleProduce():
             break
 
     sys.exit("EXIT_SUCCESS")
-    
