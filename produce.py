@@ -39,24 +39,17 @@ def merkleProduce():
     # Add elements to the hash array
 
     for x in range(arrlen):
-        a = hashlib.sha256(arr[x].encode('utf-8'))
-        a2 = hashlib.sha256()
-        a2.update(a.digest())
-        a3 = a2.hexdigest().upper()
-        hashArr.append(a2)
-        pprtArr.append(a3)
+        hashArr.append(hashlib.sha256())
+        hashArr[-1].update(hashlib.sha256(arr[x].encode('utf-8')).digest())
+        pprtArr.append(hashArr[-1].hexdigest().upper())
 
     # Balance tree by repeating the last element
 
     if arrlen < 2**lvl:
         for y in range(arrlen,2**lvl):
-            b = hashlib.sha256(arr[arrlen-1].encode('utf-8'))
-            b2 = hashlib.sha256()
-            b2.update(b.digest())
-            b3 = b2.hexdigest().upper()
-            hashArr.append(b2)
-            pprtArr.append(b3)
-    
+            hashArr.append(hashArr[arrlen-1])
+            pprtArr.append(hashArr[arrlen-1].hexdigest().upper())
+
     finArr.append(hashArr) # First array in array contains the original hashes
 
     # The arrays below are clones and for printing only
@@ -70,13 +63,11 @@ def merkleProduce():
     i = 0
     for z in range(len(lvlArr)):
         while i < len(hashArr)-1:
-            tmp1 = hashArr[i]
-            tmp2 = hashArr[i+1]
-            newHash = hashlib.sha256()
-            newHash.update(tmp1.digest())
-            newHash.update(tmp2.digest())
-            midArr.append(newHash)
-            mprtArr.append(newHash.hexdigest().upper())
+            firstHash = hashlib.sha256()
+            firstHash.update(hashArr[i].digest())
+            firstHash.update(hashArr[i+1].digest())
+            midArr.append(hashlib.sha256(firstHash.digest()))
+            mprtArr.append(midArr[-1].hexdigest().upper())
             i += 2
 
             if i > (len(hashArr)-1):
